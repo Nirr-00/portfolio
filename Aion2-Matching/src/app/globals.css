@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #0f172a; /* slate-900 */
+  color: #e2e8f0; /* slate-200 */
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(30, 58, 138, 0.15), transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(88, 28, 135, 0.15), transparent 25%);
+  background-attachment: fixed;
+}
+
+/* 마키(Marquee) 애니메이션 효과 - 텍스트 넘칠 때만 좌우로 스크롤 */
+.marquee-container {
+  container-type: inline-size;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-text {
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+  vertical-align: bottom;
+}
+
+.marquee-container:hover .marquee-text {
+  max-width: max-content;
+  text-overflow: clip;
+  animation: scroll-left 3s linear infinite alternate;
+}
+
+@keyframes scroll-left {
+  0%, 15% { transform: translateX(0); }
+  85%, 100% { transform: translateX(min(0px, calc(100cqw - 100%))); }
+}
+
+/* 스크롤바 숨김 처리 (웹킷, 파이어폭스, IE) */
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.writing-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  letter-spacing: 2px;
+}
