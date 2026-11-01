@@ -1,0 +1,2590 @@
+{
+  "components": {
+    "schemas": {
+      "AskData": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "title": "Answer",
+            "type": "string"
+          },
+          "classified_by": {
+            "enum": [
+              "keyword",
+              "llm"
+            ],
+            "title": "Classified By",
+            "type": "string"
+          },
+          "found": {
+            "title": "Found",
+            "type": "boolean"
+          },
+          "generated": {
+            "const": true,
+            "default": true,
+            "title": "Generated",
+            "type": "boolean"
+          },
+          "intent": {
+            "title": "Intent",
+            "type": "string"
+          },
+          "locations": {
+            "items": {
+              "$ref": "#/components/schemas/AskLocation"
+            },
+            "title": "Locations",
+            "type": "array"
+          },
+          "need_login": {
+            "title": "Need Login",
+            "type": "boolean"
+          },
+          "personal_data_access": {
+            "title": "Personal Data Access",
+            "type": "boolean"
+          },
+          "record_source": {
+            "const": "DEMO",
+            "default": "DEMO",
+            "title": "Record Source",
+            "type": "string"
+          },
+          "rewritten_question": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rewritten Question"
+          },
+          "sources": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Sources",
+            "type": "array"
+          }
+        },
+        "required": [
+          "answer",
+          "sources",
+          "locations",
+          "found",
+          "intent",
+          "need_login",
+          "classified_by",
+          "personal_data_access"
+        ],
+        "title": "AskData",
+        "type": "object"
+      },
+      "AskInput": {
+        "additionalProperties": false,
+        "properties": {
+          "history": {
+            "items": {
+              "$ref": "#/components/schemas/AskTurn"
+            },
+            "maxItems": 6,
+            "title": "History",
+            "type": "array"
+          },
+          "question": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Question",
+            "type": "string"
+          },
+          "user_location": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AskUserLocation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "question"
+        ],
+        "title": "AskInput",
+        "type": "object"
+      },
+      "AskLocation": {
+        "additionalProperties": false,
+        "properties": {
+          "building": {
+            "title": "Building",
+            "type": "string"
+          },
+          "distance_m": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Distance M"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "lat": {
+            "title": "Lat",
+            "type": "number"
+          },
+          "lng": {
+            "title": "Lng",
+            "type": "number"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "walk_minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Walk Minutes"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "building",
+          "lat",
+          "lng"
+        ],
+        "title": "AskLocation",
+        "type": "object"
+      },
+      "AskTurn": {
+        "additionalProperties": false,
+        "properties": {
+          "content": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Content",
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "user",
+              "assistant"
+            ],
+            "title": "Role",
+            "type": "string"
+          }
+        },
+        "required": [
+          "role",
+          "content"
+        ],
+        "title": "AskTurn",
+        "type": "object"
+      },
+      "AskUserLocation": {
+        "additionalProperties": false,
+        "properties": {
+          "lat": {
+            "maximum": 90.0,
+            "minimum": -90.0,
+            "title": "Lat",
+            "type": "number"
+          },
+          "lng": {
+            "maximum": 180.0,
+            "minimum": -180.0,
+            "title": "Lng",
+            "type": "number"
+          }
+        },
+        "required": [
+          "lat",
+          "lng"
+        ],
+        "title": "AskUserLocation",
+        "type": "object"
+      },
+      "CampusSearchData": {
+        "additionalProperties": false,
+        "properties": {
+          "found": {
+            "title": "Found",
+            "type": "boolean"
+          },
+          "generated": {
+            "const": false,
+            "default": false,
+            "title": "Generated",
+            "type": "boolean"
+          },
+          "hits": {
+            "items": {
+              "$ref": "#/components/schemas/CampusSearchHit"
+            },
+            "title": "Hits",
+            "type": "array"
+          },
+          "mode": {
+            "const": "retrieval_only",
+            "default": "retrieval_only",
+            "title": "Mode",
+            "type": "string"
+          },
+          "personal_data_access": {
+            "const": false,
+            "default": false,
+            "title": "Personal Data Access",
+            "type": "boolean"
+          },
+          "source": {
+            "const": "chatbot/data/facilities.json",
+            "default": "chatbot/data/facilities.json",
+            "title": "Source",
+            "type": "string"
+          },
+          "source_notice": {
+            "default": "기존 챗봇 시설 스냅샷이며 공식 출처와 최신성은 검증되지 않았습니다.",
+            "title": "Source Notice",
+            "type": "string"
+          },
+          "verification": {
+            "const": "UNKNOWN",
+            "default": "UNKNOWN",
+            "title": "Verification",
+            "type": "string"
+          }
+        },
+        "required": [
+          "found",
+          "hits"
+        ],
+        "title": "CampusSearchData",
+        "type": "object"
+      },
+      "CampusSearchHit": {
+        "additionalProperties": false,
+        "properties": {
+          "building": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Building"
+          },
+          "category": {
+            "title": "Category",
+            "type": "string"
+          },
+          "floor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Floor"
+          },
+          "hours": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hours"
+          },
+          "matched_by": {
+            "enum": [
+              "alias",
+              "fuzzy",
+              "keyword"
+            ],
+            "title": "Matched By",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "room": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Room"
+          },
+          "score": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Score",
+            "type": "number"
+          },
+          "source_id": {
+            "title": "Source Id",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_id",
+          "name",
+          "category",
+          "text",
+          "score",
+          "matched_by"
+        ],
+        "title": "CampusSearchHit",
+        "type": "object"
+      },
+      "DiscoveryItem": {
+        "additionalProperties": false,
+        "properties": {
+          "detail_path": {
+            "title": "Detail Path",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "guide",
+              "facility"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "source": {
+            "discriminator": {
+              "mapping": {
+                "official_summary": "#/components/schemas/GuideSource",
+                "unverified_facility": "#/components/schemas/FacilitySource"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/GuideSource"
+              },
+              {
+                "$ref": "#/components/schemas/FacilitySource"
+              }
+            ],
+            "title": "Source"
+          },
+          "summary": {
+            "maxLength": 700,
+            "title": "Summary",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "title",
+          "summary",
+          "detail_path",
+          "source"
+        ],
+        "title": "DiscoveryItem",
+        "type": "object"
+      },
+      "DiscoveryPage": {
+        "additionalProperties": false,
+        "properties": {
+          "complete": {
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "guide",
+                "facility"
+              ]
+            },
+            "title": "Counts",
+            "type": "object"
+          },
+          "generated": {
+            "const": false,
+            "default": false,
+            "title": "Generated",
+            "type": "boolean"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DiscoveryItem"
+            },
+            "maxItems": 20,
+            "title": "Items",
+            "type": "array"
+          },
+          "kind": {
+            "enum": [
+              "all",
+              "guide",
+              "facility"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "limit": {
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "notice": {
+            "default": "공개 대학 안내와 시설 스냅샷만 검색합니다. 개인 시간표·성적·신청·대화는 검색하지 않습니다. 출처별 확인 범위가 다르며 실시간 학교 정보나 AI 생성 답변이 아닙니다.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "offset": {
+            "maximum": 200.0,
+            "minimum": 0.0,
+            "title": "Offset",
+            "type": "integer"
+          },
+          "personal_data_access": {
+            "const": false,
+            "default": false,
+            "title": "Personal Data Access",
+            "type": "boolean"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string"
+          },
+          "total": {
+            "maximum": 200.0,
+            "minimum": 0.0,
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "query",
+          "kind",
+          "items",
+          "total",
+          "counts",
+          "offset",
+          "limit",
+          "complete"
+        ],
+        "title": "DiscoveryPage",
+        "type": "object"
+      },
+      "ErrorCode": {
+        "enum": [
+          "VALIDATION",
+          "UNAUTHORIZED",
+          "FORBIDDEN",
+          "NOT_FOUND",
+          "CONFLICT",
+          "RATE_LIMITED",
+          "UNAVAILABLE",
+          "INTERNAL",
+          "HTTP_ERROR"
+        ],
+        "title": "ErrorCode",
+        "type": "string"
+      },
+      "ErrorResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "field_errors": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Field Errors"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "request_id": {
+            "title": "Request Id",
+            "type": "string"
+          },
+          "retryable": {
+            "default": false,
+            "title": "Retryable",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "request_id"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "FacilitySource": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "unverified_facility",
+            "default": "unverified_facility",
+            "title": "Kind",
+            "type": "string"
+          },
+          "notice": {
+            "default": "기존 시설 스냅샷입니다. 공식 출처와 최신성은 검증되지 않았습니다.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "source_path": {
+            "const": "chatbot/data/facilities.json",
+            "default": "chatbot/data/facilities.json",
+            "title": "Source Path",
+            "type": "string"
+          },
+          "verification": {
+            "const": "UNKNOWN",
+            "default": "UNKNOWN",
+            "title": "Verification",
+            "type": "string"
+          }
+        },
+        "title": "FacilitySource",
+        "type": "object"
+      },
+      "GuideSection": {
+        "additionalProperties": false,
+        "properties": {
+          "heading": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Heading",
+            "type": "string"
+          },
+          "paragraphs": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 6,
+            "minItems": 1,
+            "title": "Paragraphs",
+            "type": "array"
+          }
+        },
+        "required": [
+          "heading",
+          "paragraphs"
+        ],
+        "title": "GuideSection",
+        "type": "object"
+      },
+      "GuideSource": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence": {
+            "$ref": "#/components/schemas/SourceEvidence"
+          },
+          "kind": {
+            "const": "official_summary",
+            "default": "official_summary",
+            "title": "Kind",
+            "type": "string"
+          },
+          "snapshot_version": {
+            "title": "Snapshot Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "evidence",
+          "snapshot_version"
+        ],
+        "title": "GuideSource",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HealthData": {
+        "additionalProperties": false,
+        "properties": {
+          "service": {
+            "const": "ditnow-api",
+            "title": "Service",
+            "type": "string"
+          },
+          "status": {
+            "const": "ok",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "service"
+        ],
+        "title": "HealthData",
+        "type": "object"
+      },
+      "LoginData": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "record_source": {
+            "const": "DEMO",
+            "default": "DEMO",
+            "title": "Record Source",
+            "type": "string"
+          },
+          "student_id": {
+            "title": "Student Id",
+            "type": "string"
+          },
+          "token": {
+            "title": "Token",
+            "type": "string"
+          },
+          "token_type": {
+            "const": "Bearer",
+            "default": "Bearer",
+            "title": "Token Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "token",
+          "student_id",
+          "name"
+        ],
+        "title": "LoginData",
+        "type": "object"
+      },
+      "LoginInput": {
+        "additionalProperties": false,
+        "properties": {
+          "password": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Password",
+            "type": "string"
+          },
+          "student_id": {
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Student Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "student_id",
+          "password"
+        ],
+        "title": "LoginInput",
+        "type": "object"
+      },
+      "ProvenanceLabelInfo": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "Description",
+            "type": "string"
+          },
+          "label": {
+            "enum": [
+              "DEMO",
+              "OFFICIAL_PUBLIC",
+              "PLATFORM",
+              "UNKNOWN"
+            ],
+            "title": "Label",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 40,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "user_guidance": {
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "User Guidance",
+            "type": "string"
+          }
+        },
+        "required": [
+          "label",
+          "title",
+          "description",
+          "user_guidance"
+        ],
+        "title": "ProvenanceLabelInfo",
+        "type": "object"
+      },
+      "ProvenanceOverview": {
+        "additionalProperties": false,
+        "properties": {
+          "catalog_version": {
+            "maxLength": 60,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "title": "Catalog Version",
+            "type": "string"
+          },
+          "feature_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Feature Ids",
+            "type": "array"
+          },
+          "labels": {
+            "items": {
+              "$ref": "#/components/schemas/ProvenanceLabelInfo"
+            },
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "Labels",
+            "type": "array"
+          },
+          "notice": {
+            "maxLength": 400,
+            "minLength": 1,
+            "title": "Notice",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ProvenanceStatus"
+          }
+        },
+        "required": [
+          "catalog_version",
+          "feature_ids",
+          "notice",
+          "status",
+          "labels"
+        ],
+        "title": "ProvenanceOverview",
+        "type": "object"
+      },
+      "ProvenanceStatus": {
+        "additionalProperties": false,
+        "description": "Fixed facts about this platform; every value is a constant, never configuration.",
+        "properties": {
+          "content_administration": {
+            "const": "NOT_IMPLEMENTED",
+            "default": "NOT_IMPLEMENTED",
+            "title": "Content Administration",
+            "type": "string"
+          },
+          "financial_effect": {
+            "const": "NONE",
+            "default": "NONE",
+            "title": "Financial Effect",
+            "type": "string"
+          },
+          "persistence": {
+            "const": "IN_PROCESS_FIXED",
+            "default": "IN_PROCESS_FIXED",
+            "title": "Persistence",
+            "type": "string"
+          },
+          "school_sso_connected": {
+            "const": false,
+            "default": false,
+            "title": "School Sso Connected",
+            "type": "boolean"
+          }
+        },
+        "title": "ProvenanceStatus",
+        "type": "object"
+      },
+      "PublicGuide": {
+        "additionalProperties": false,
+        "properties": {
+          "category": {
+            "enum": [
+              "university",
+              "campus",
+              "disclosure",
+              "news",
+              "department"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "content_kind": {
+            "const": "EDITORIAL_PUBLIC_SUMMARY",
+            "default": "EDITORIAL_PUBLIC_SUMMARY",
+            "title": "Content Kind",
+            "type": "string"
+          },
+          "feature_ids": {
+            "items": {
+              "enum": [
+                "FR-WEB-001",
+                "FR-WEB-002",
+                "FR-WEB-003",
+                "FR-WEB-004",
+                "FR-DEPT-007",
+                "FR-DEPT-008"
+              ],
+              "type": "string"
+            },
+            "maxItems": 6,
+            "minItems": 1,
+            "title": "Feature Ids",
+            "type": "array"
+          },
+          "id": {
+            "maxLength": 80,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "title": "Id",
+            "type": "string"
+          },
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/GuideSection"
+            },
+            "maxItems": 8,
+            "minItems": 1,
+            "title": "Sections",
+            "type": "array"
+          },
+          "source": {
+            "$ref": "#/components/schemas/SourceEvidence"
+          },
+          "summary": {
+            "maxLength": 700,
+            "minLength": 1,
+            "title": "Summary",
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 12,
+            "title": "Tags",
+            "type": "array"
+          },
+          "title": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "category",
+          "feature_ids",
+          "summary",
+          "sections",
+          "tags",
+          "source"
+        ],
+        "title": "PublicGuide",
+        "type": "object"
+      },
+      "PublicGuideCard": {
+        "additionalProperties": false,
+        "properties": {
+          "category": {
+            "enum": [
+              "university",
+              "campus",
+              "disclosure",
+              "news",
+              "department"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "source": {
+            "$ref": "#/components/schemas/SourceEvidence"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "category",
+          "summary",
+          "tags",
+          "source"
+        ],
+        "title": "PublicGuideCard",
+        "type": "object"
+      },
+      "PublicGuidePage": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PublicGuideCard"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "maximum": 50.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "notice": {
+            "default": "공식 공개 페이지를 참고한 DIT NOW 편집 요약입니다. 최신 공식 안내와 처리 규칙은 원문을 확인하세요.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "offset": {
+            "minimum": 0.0,
+            "title": "Offset",
+            "type": "integer"
+          },
+          "snapshot_version": {
+            "title": "Snapshot Version",
+            "type": "string"
+          },
+          "total": {
+            "minimum": 0.0,
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "offset",
+          "limit",
+          "snapshot_version"
+        ],
+        "title": "PublicGuidePage",
+        "type": "object"
+      },
+      "SessionProfile": {
+        "additionalProperties": false,
+        "description": "Own-account projection; never reuse this model in anonymous post responses.",
+        "properties": {
+          "academic_year": {
+            "minimum": 1.0,
+            "title": "Academic Year",
+            "type": "integer"
+          },
+          "community_access": {
+            "title": "Community Access",
+            "type": "boolean"
+          },
+          "department_code": {
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "Department Code",
+            "type": "string"
+          },
+          "department_id": {
+            "format": "uuid",
+            "title": "Department Id",
+            "type": "string"
+          },
+          "display_name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Display Name",
+            "type": "string"
+          },
+          "record_source": {
+            "const": "DEMO",
+            "default": "DEMO",
+            "title": "Record Source",
+            "type": "string"
+          },
+          "user_id": {
+            "format": "uuid",
+            "title": "User Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "display_name",
+          "department_id",
+          "department_code",
+          "academic_year",
+          "community_access"
+        ],
+        "title": "SessionProfile",
+        "type": "object"
+      },
+      "SourceEvidence": {
+        "additionalProperties": false,
+        "properties": {
+          "checked_at": {
+            "format": "date",
+            "title": "Checked At",
+            "type": "string"
+          },
+          "checked_scope": {
+            "default": "공식 페이지의 도구 반환본 확인. 원문 수정일이나 실시간 최신성을 보장하지 않음.",
+            "title": "Checked Scope",
+            "type": "string"
+          },
+          "evidence": {
+            "maxLength": 600,
+            "minLength": 1,
+            "title": "Evidence",
+            "type": "string"
+          },
+          "existence": {
+            "const": "VERIFIED",
+            "default": "VERIFIED",
+            "title": "Existence",
+            "type": "string"
+          },
+          "freshness": {
+            "const": "UNKNOWN",
+            "default": "UNKNOWN",
+            "title": "Freshness",
+            "type": "string"
+          },
+          "processing_rules": {
+            "const": "PARTIAL",
+            "default": "PARTIAL",
+            "title": "Processing Rules",
+            "type": "string"
+          },
+          "site": {
+            "enum": [
+              "university",
+              "cs"
+            ],
+            "title": "Site",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "site",
+          "checked_at",
+          "evidence"
+        ],
+        "title": "SourceEvidence",
+        "type": "object"
+      },
+      "SuccessResponse_AskData_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/AskData"
+          },
+          "resource_version": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Version"
+          },
+          "server_time": {
+            "format": "date-time",
+            "title": "Server Time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "SuccessResponse[AskData]",
+        "type": "object"
+      },
+      "SuccessResponse_CampusSearchData_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/CampusSearchData"
+          },
+          "resource_version": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Version"
+          },
+          "server_time": {
+            "format": "date-time",
+            "title": "Server Time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "SuccessResponse[CampusSearchData]",
+        "type": "object"
+      },
+      "SuccessResponse_DiscoveryPage_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/DiscoveryPage"
+          },
+          "resource_version": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Version"
+          },
+          "server_time": {
+            "format": "date-time",
+            "title": "Server Time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "SuccessResponse[DiscoveryPage]",
+        "type": "object"
+      },
+      "SuccessResponse_HealthData_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/HealthData"
+          },
+          "resource_version": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Version"
+          },
+          "server_time": {
+            "format": "date-time",
+            "title": "Server Time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "SuccessResponse[HealthData]",
+        "type": "object"
+      },
+      "SuccessResponse_LoginData_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/LoginData"
+          },
+          "resource_version": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Version"
+          },
+          "server_time": {
+            "format": "date-time",
+            "title": "Server Time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "SuccessResponse[LoginData]",
+        "type": "object"
+      },
+      "SuccessResponse_ProvenanceLabelInfo_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ProvenanceLabelInfo"
+          },
+          "resource_version": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Version"
+          },
+          "server_time": {
+            "format": "date-time",
+            "title": "Server Time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "SuccessResponse[ProvenanceLabelInfo]",
+        "type": "object"
+      },
+      "SuccessResponse_ProvenanceOverview_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ProvenanceOverview"
+          },
+          "resource_version": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Version"
+          },
+          "server_time": {
+            "format": "date-time",
+            "title": "Server Time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "SuccessResponse[ProvenanceOverview]",
+        "type": "object"
+      },
+      "SuccessResponse_PublicGuidePage_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/PublicGuidePage"
+          },
+          "resource_version": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Version"
+          },
+          "server_time": {
+            "format": "date-time",
+            "title": "Server Time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "SuccessResponse[PublicGuidePage]",
+        "type": "object"
+      },
+      "SuccessResponse_PublicGuide_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/PublicGuide"
+          },
+          "resource_version": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Version"
+          },
+          "server_time": {
+            "format": "date-time",
+            "title": "Server Time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "SuccessResponse[PublicGuide]",
+        "type": "object"
+      },
+      "SuccessResponse_SessionProfile_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/SessionProfile"
+          },
+          "resource_version": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Version"
+          },
+          "server_time": {
+            "format": "date-time",
+            "title": "Server Time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "SuccessResponse[SessionProfile]",
+        "type": "object"
+      },
+      "SuccessResponse_TravelResult_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/TravelResult"
+          },
+          "resource_version": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Version"
+          },
+          "server_time": {
+            "format": "date-time",
+            "title": "Server Time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "SuccessResponse[TravelResult]",
+        "type": "object"
+      },
+      "SuccessResponse_dict_str__str__": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Data",
+            "type": "object"
+          },
+          "resource_version": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Version"
+          },
+          "server_time": {
+            "format": "date-time",
+            "title": "Server Time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "SuccessResponse[dict[str, str]]",
+        "type": "object"
+      },
+      "TravelInput": {
+        "additionalProperties": false,
+        "properties": {
+          "estimated_travel_minutes": {
+            "maximum": 1440.0,
+            "minimum": 0.0,
+            "title": "Estimated Travel Minutes",
+            "type": "integer"
+          },
+          "next_starts_at": {
+            "format": "date-time",
+            "title": "Next Starts At",
+            "type": "string"
+          },
+          "previous_ends_at": {
+            "format": "date-time",
+            "title": "Previous Ends At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "previous_ends_at",
+          "next_starts_at",
+          "estimated_travel_minutes"
+        ],
+        "title": "TravelInput",
+        "type": "object"
+      },
+      "TravelResult": {
+        "additionalProperties": false,
+        "properties": {
+          "calculation_version": {
+            "const": "manual-travel-v1",
+            "default": "manual-travel-v1",
+            "title": "Calculation Version",
+            "type": "string"
+          },
+          "estimate_source": {
+            "const": "USER_INPUT",
+            "default": "USER_INPUT",
+            "title": "Estimate Source",
+            "type": "string"
+          },
+          "gap_seconds": {
+            "title": "Gap Seconds",
+            "type": "integer"
+          },
+          "next_starts_at": {
+            "format": "date-time",
+            "title": "Next Starts At",
+            "type": "string"
+          },
+          "notice": {
+            "const": "사용자가 입력한 시각과 예상 이동 시간만 계산합니다. 실제 지도·최단 경로·공식 이동 시간·접근 가능한 동선·도착을 보장하지 않습니다. 개인 시간표는 연결하지 않습니다.",
+            "default": "사용자가 입력한 시각과 예상 이동 시간만 계산합니다. 실제 지도·최단 경로·공식 이동 시간·접근 가능한 동선·도착을 보장하지 않습니다. 개인 시간표는 연결하지 않습니다.",
+            "title": "Notice",
+            "type": "string"
+          },
+          "previous_ends_at": {
+            "format": "date-time",
+            "title": "Previous Ends At",
+            "type": "string"
+          },
+          "remaining_seconds": {
+            "title": "Remaining Seconds",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "OVERLAP",
+              "INSUFFICIENT",
+              "NO_MARGIN",
+              "HAS_MARGIN"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "travel_seconds": {
+            "maximum": 86400.0,
+            "minimum": 0.0,
+            "title": "Travel Seconds",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "previous_ends_at",
+          "next_starts_at",
+          "gap_seconds",
+          "travel_seconds",
+          "remaining_seconds",
+          "status"
+        ],
+        "title": "TravelResult",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "description": "/api/v1/auth/login에서 받은 token",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "DIT NOW 통합 API. 학번 로그인과 AI 답변은 가상(DEMO) 학적 데이터를 사용한다.",
+    "title": "DIT NOW API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/ai/ask": {
+      "post": {
+        "description": "자연어 질문에 교내 데이터·(로그인 시) 본인 가상 학적을 근거로 LLM이 답한다.\n\nhistory를 보내면 '거기 몇 시까지 해?' 같은 후속 질문을 완전한 질문으로 바꿔 처리한다.",
+        "operationId": "ask_api_v1_ai_ask_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse_AskData_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ask",
+        "tags": [
+          "campus-search"
+        ]
+      }
+    },
+    "/api/v1/ai/campus/search": {
+      "get": {
+        "description": "공개 시설 스냅샷 검색. LLM 생성·개인정보 질의·별도 로그인은 제공하지 않는다.",
+        "operationId": "search_campus_api_v1_ai_campus_search_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": true,
+            "schema": {
+              "maxLength": 200,
+              "minLength": 1,
+              "title": "Q",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 5,
+              "maximum": 10,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse_CampusSearchData_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Search Campus",
+        "tags": [
+          "campus-search"
+        ]
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "description": "학번과 초기 비밀번호로 로그인한다. 학생·학적은 모두 가상(DEMO) 데이터다.",
+        "operationId": "login_api_v1_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse_LoginData_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Login",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "operationId": "logout_api_v1_auth_logout_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse_dict_str__str__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Logout",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "operationId": "me_api_v1_auth_me_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse_SessionProfile_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Me",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/campus-travel/calculate": {
+      "post": {
+        "operationId": "calculate_api_v1_campus_travel_calculate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TravelInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse_TravelResult_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Calculate",
+        "tags": [
+          "campus-travel-manual"
+        ]
+      }
+    },
+    "/api/v1/data-provenance": {
+      "get": {
+        "operationId": "get_provenance_overview_api_v1_data_provenance_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse_ProvenanceOverview_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Get Provenance Overview",
+        "tags": [
+          "data-provenance"
+        ]
+      }
+    },
+    "/api/v1/data-provenance/labels/{label}": {
+      "get": {
+        "operationId": "get_provenance_label_api_v1_data_provenance_labels__label__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "label",
+            "required": true,
+            "schema": {
+              "enum": [
+                "DEMO",
+                "OFFICIAL_PUBLIC",
+                "PLATFORM",
+                "UNKNOWN"
+              ],
+              "title": "Label",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse_ProvenanceLabelInfo_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Get Provenance Label",
+        "tags": [
+          "data-provenance"
+        ]
+      }
+    },
+    "/api/v1/discovery": {
+      "get": {
+        "description": "Public snapshots only. No personal, authenticated, remote or generated sources.",
+        "operationId": "discover_api_v1_discovery_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": true,
+            "schema": {
+              "maxLength": 200,
+              "minLength": 1,
+              "title": "Q",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "kind",
+            "required": false,
+            "schema": {
+              "default": "all",
+              "enum": [
+                "all",
+                "guide",
+                "facility"
+              ],
+              "title": "Kind",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 200,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "maximum": 20,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse_DiscoveryPage_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Discover",
+        "tags": [
+          "public-discovery"
+        ]
+      }
+    },
+    "/api/v1/health": {
+      "get": {
+        "description": "Process liveness only. Does not assert database/authentication readiness.",
+        "operationId": "health_api_v1_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse_HealthData_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/api/v1/public-campus": {
+      "get": {
+        "operationId": "list_guides_api_v1_public_campus_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "default": "",
+              "maxLength": 200,
+              "title": "Q",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "university",
+                    "campus",
+                    "disclosure",
+                    "news",
+                    "department"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Category"
+            }
+          },
+          {
+            "in": "query",
+            "name": "site",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "university",
+                    "cs"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Site"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse_PublicGuidePage_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "List Guides",
+        "tags": [
+          "public-campus"
+        ]
+      }
+    },
+    "/api/v1/public-campus/{record_id}": {
+      "get": {
+        "operationId": "get_guide_api_v1_public_campus__record_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "record_id",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "title": "Record Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse_PublicGuide_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Get Guide",
+        "tags": [
+          "public-campus"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "Process liveness only. Does not assert database/authentication readiness.",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse_HealthData_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "health"
+        ]
+      }
+    }
+  }
+}

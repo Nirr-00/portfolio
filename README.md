@@ -18,3 +18,15 @@
   - **품질 관리**: `AGENTS.md` 기반 4단계 AI 정밀 검사 파이프라인 및 패치 노트(`CHANGELOG.md`) 중심 변경 이력 관리
 
 ---
+
+### [DIT-NOW Campus Platform](https://github.com/Nirr-00/portfolio/tree/main/DIT-NOW)
+- **프로젝트 상세 보기**: [DIT-NOW 폴더 바로가기](https://github.com/Nirr-00/portfolio/tree/main/DIT-NOW)
+- **서비스 개요**: 대학 캠퍼스 학사 정보, 학과 공지, 시설 안내 및 기회 매칭을 통합 제공하고, RAG/LLM 기반 캠퍼스 질의응답을 지원하는 풀스택 모노레포 플랫폼입니다.
+- **기술 스택**: React 19, TypeScript, Vite, FastAPI (Python 3.13), MariaDB 11.4, Docker, GitHub Actions
+- **핵심 엔지니어링**:
+  - **Full-Stack Monorepo 아키텍처**: 신규 통합 웹(`apps/web`), 고성능 비동기 API 서버(`services/api`), RAG 검색 챗봇(`chatbot`), MariaDB 인프라(`infra`), E2E 검증 하네스(`tests/`)의 유기적 모노레포 구조화
+  - **Fail-Closed 보안 및 서버 사이드 인가**: 비동기 웹 계층과 순수 동기 도메인 계층 분리(`AsyncSession.run_sync`), 원격 TLS 1.3 강제 연결, 메모리 세션 기반 신원 재검증
+  - **데이터 무결성 & 멱등성**: 멱등성 키(Idempotency-Key) 및 낙관적 락(Optimistic Lock)을 통한 동시성 제어, OpenAPI 스키마-클라이언트 타입 자동 동기화
+  - **AI 거버넌스 & 품질 관리**: `AGENTS.md` 기반 Codex / Claude Code 이중 에이전트 스킬 미러링, CI 파이프라인(6종 워크플로우) 및 브라우저 하네스 기반 테스트 주도 개발
+
+---
